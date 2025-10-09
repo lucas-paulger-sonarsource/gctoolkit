@@ -5,6 +5,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
   # Trigger at 1:00 AM UTC on weekdays (Monday-Friday)
   schedule:
     - cron: '0 1 * * 1-5'
@@ -39,6 +40,7 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_ARCHITECTURE_EXPORT_GRAPHS: true
           SONAR_ARCHITECTURE_EXPORT_FLAVOR: true
           SONAR_ARCHITECTURE_EXPORT_ISSUES: true
@@ -47,7 +49,7 @@ jobs:
           SONAR_ARCHITECTURE_PREVIEW_ENABLE: true
           SONAR_ARCHITECTURE_PREVIEW_AVAILABLE: true
         run: |
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=sonarsource_gctoolkit  -Dsonar.architecture.visualization.enabled=false -Dsonar.architecture.enable=true -Dsonar.architecture.preview.enable=true -Dsonar.architecture.preview.available=true -DskipTests
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=lucas-paulger-sonarsource_gctoolkit -Dsonar.verbose=true -DskipTests
           ls -lR ./target/sonar/architecture/exports/
           echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
           echo "DATE=$(echo $(date +'%Y-%m-%d'))" >> $GITHUB_ENV
