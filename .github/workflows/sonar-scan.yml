@@ -79,6 +79,8 @@ jobs:
             "-Dsonar.token=${SONAR_TOKEN}"
             "-Dsonar.verbose=true"
             "-DskipTests"
+            "-Dsonar.featureflag.design-architecture-squad-enable-advanced=true"
+            "-Dsonar.featureflag.design-architecture-squad-enable-basic=true"
           )
 
           # Add PR-specific parameters
