@@ -79,6 +79,8 @@ jobs:
             "-Dsonar.token=${SONAR_TOKEN}"
             "-Dsonar.verbose=true"
             "-DskipTests"
+            "-Dsonar.featureflag.design-architecture-squad-enable-advanced=true"
+            "-Dsonar.featureflag.design-architecture-squad-enable-basic=true"
           )
 
           # Add PR-specific parameters
@@ -86,6 +88,9 @@ jobs:
             MVN_PARAMS+=("-Dsonar.pullrequest.key=${{ github.event.pull_request.number }}")
             MVN_PARAMS+=("-Dsonar.pullrequest.branch=${{ github.head_ref }}")
             MVN_PARAMS+=("-Dsonar.pullrequest.base=${{ github.base_ref }}")
+          else
+            # For branch pushes, specify the branch name
+            MVN_PARAMS+=("-Dsonar.branch.name=${{ github.ref_name }}")
           fi
 
           # Run Maven with scanner
