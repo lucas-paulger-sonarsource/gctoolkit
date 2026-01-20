@@ -36,6 +36,7 @@ import static java.lang.Class.forName;
 
 /**
  * The primary API for analyzing Java Garbage Collection (GC) logs.
+ * This toolkit provides comprehensive GC log analysis capabilities.
  */
 public class GCToolKit {
 
@@ -88,6 +89,14 @@ public class GCToolKit {
         // Allow for adding aggregations from source code,
         // but don't corrupt the ones loaded by the service loader
         this.registeredAggregations = new ArrayList<>();
+    }
+
+    /**
+     * Get the number of registered aggregations.
+     * @return the count of registered aggregations
+     */
+    public int getRegisteredAggregationCount() {
+        return registeredAggregations.size();
     }
 
     /**
