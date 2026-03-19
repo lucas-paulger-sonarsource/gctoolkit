@@ -26,9 +26,9 @@ permissions:
 
 jobs:
   sonar-scan:
-    name: Build and Scan with SonarQube (${{ github.event.inputs.environment || 'staging' }})
+    name: Build and Scan with SonarQube (${{ github.event.inputs.environment || 'dev19' }})
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment || 'staging' }}
+    environment: ${{ github.event.inputs.environment || 'dev19' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
