@@ -1,0 +1,65 @@
+{
+  "perspectives": [
+    {
+      "label": "gctoolkit modules",
+      "description": "Every module builds on gctoolkit-api, which depends on nothing. Inside the API, the event model depends only on time.",
+      "qualifiers": "namespace",
+      "language": "java",
+      "groups": [
+        {
+          "label": "api",
+          "description": "Public API: events, aggregation, JVM model and I/O.",
+          "patterns": ["gctoolkit-api:**"],
+          "groups": [
+            { "label": "toolkit", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.GCToolKit"] },
+            { "label": "aggregator", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.aggregator.**"] },
+            { "label": "event", "description": "GC event model. Depends only on time.", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.event.**"] },
+            { "label": "io", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.io.**"] },
+            { "label": "jvm", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.jvm.**"] },
+            { "label": "message", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.message.**"] },
+            { "label": "statistics", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.online.statistics.**"] },
+            { "label": "datatype", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.parser.datatype.**"] },
+            { "label": "time", "patterns": ["gctoolkit-api:com.microsoft.gctoolkit.time.**"] }
+          ]
+        },
+        { "label": "parser", "description": "GC log parsers.", "patterns": ["gctoolkit-parser:**"] },
+        { "label": "vertx", "description": "Vert.x message bus implementation.", "patterns": ["gctoolkit-vertx:**"] },
+        { "label": "sample", "description": "Sample application.", "patterns": ["gctoolkit-sample:**"] },
+        { "label": "integration", "description": "Integration tests.", "patterns": ["gctoolkit-integration:**"] }
+      ],
+      "constraints": [
+        { "from": "parser", "to": "api" },
+        { "from": "vertx", "to": "api" },
+        { "from": "sample", "to": "api" },
+        { "from": "integration", "to": "api" },
+
+        { "from": "api/toolkit", "to": "api/aggregator" },
+        { "from": "api/toolkit", "to": "api/io" },
+        { "from": "api/toolkit", "to": "api/jvm" },
+        { "from": "api/toolkit", "to": "api/message" },
+
+        { "from": "api/aggregator", "to": "api/event" },
+        { "from": "api/aggregator", "to": "api/message" },
+        { "from": "api/aggregator", "to": "api/statistics" },
+        { "from": "api/aggregator", "to": "api/time" },
+
+        { "from": "api/event", "to": "api/time" },
+
+        { "from": "api/io", "to": "api/jvm" },
+        { "from": "api/io", "to": "api/datatype" },
+        { "from": "api/io", "to": "api/time" },
+
+        { "from": "api/jvm", "to": "api/toolkit" },
+        { "from": "api/jvm", "to": "api/aggregator" },
+        { "from": "api/jvm", "to": "api/io" },
+        { "from": "api/jvm", "to": "api/message" },
+        { "from": "api/jvm", "to": "api/datatype" },
+        { "from": "api/jvm", "to": "api/time" },
+
+        { "from": "api/message", "to": "api/aggregator" },
+        { "from": "api/message", "to": "api/event" },
+        { "from": "api/message", "to": "api/jvm" }
+      ]
+    }
+  ]
+}
